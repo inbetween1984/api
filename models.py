@@ -40,5 +40,5 @@ class EntityResponse(BaseModel):
     entity_id: str
     actions: Dict[str, List[ActionSession]]
     total_duration: Dict[str, float]
-    average_duration: Dict[str, float | None]
+    average_duration: Dict[str, float]
     session_count: Dict[str, int]
