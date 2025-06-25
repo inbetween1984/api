@@ -8,10 +8,11 @@ ORDER BY timestamp ASC;
 """
 
 
-COUNT_SEX_HUNTING_QUERY = """
-SELECT COUNT("value") as count, entity_id
+COUNT_NON_PAIRED_ACTIONS_QUERY = """
+SELECT COUNT(*) as count, entity_id, action
 FROM activity
 WHERE entity_id IN %s
-AND action = %s
-AND timestamp >= %s AND timestamp <= %s;
+AND action IN %s
+AND timestamp >= %s AND timestamp <= %s
+GROUP BY entity_id, action;
 """

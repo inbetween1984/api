@@ -10,6 +10,22 @@ class ActionsRequest(BaseModel):
     start_time: str
     end_time: str
 
+    @validator('entity_ids')
+    def deduplicate_entity_ids(cls, entity_ids):
+        unique_ids = list(dict.fromkeys(entity_ids))
+        if len(unique_ids) < len(entity_ids):
+            from config import logger
+            logger.warning(f"removed duplicate entity_ids: {entity_ids}")
+        return unique_ids
+
+    @validator('actions')
+    def deduplicate_actions(cls, actions):
+        unique_actions = list(dict.fromkeys(actions))
+        if len(unique_actions) < len(actions):
+            from config import logger
+            logger.warning(f"removed duplicate actions: {actions}")
+        return unique_actions
+
     @validator('start_time', 'end_time')
     def validate_time_format(cls, value):
         try:
